@@ -24,8 +24,11 @@ class SearchViewModel @Inject constructor(
 
     var numberToSearch = mutableStateOf("")
 
-    var steps by mutableStateOf(listOf(""))
+    var numberFound = mutableStateOf(false)
 
+    var steps by mutableStateOf(listOf<String>())
+
+    var binarySearchStates by mutableStateOf(listOf(listOf<Int>()))
 
     fun updateInputArray(index: Int, newNum: Int) {
         inputArray = inputArray.toMutableList().also { it[index] = newNum }
@@ -37,6 +40,18 @@ class SearchViewModel @Inject constructor(
 
     fun emptySteps() {
         steps = steps.drop(steps.size)
+    }
+
+    fun addBinarySearchStates(state: List<Int>) {
+        binarySearchStates = binarySearchStates + listOf(state)
+    }
+
+    fun emptyBinarySearchStates() {
+        binarySearchStates = binarySearchStates.drop(binarySearchStates.size)
+    }
+
+    fun updateNumberFound(found: Boolean) {
+        numberFound.value = found
     }
 
     init {

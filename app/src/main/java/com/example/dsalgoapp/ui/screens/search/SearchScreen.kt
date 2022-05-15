@@ -260,10 +260,10 @@ fun getColorState(step: Int, index: Int, searchViewModel: SearchViewModel): Colo
                 return Green
             }
         }
-        return if (index < curState[0] || index > curState[2]) {
-            Gray
-        } else if (index == curState[1]) {
+        return if (index == curState[1]) {
             Red
+        } else if (index < curState[0] || index > curState[2]) {
+            Gray
         } else {
             Color.Transparent
         }

@@ -61,8 +61,8 @@ fun AlgoListItem(item: ListItem3, navController: NavController) {
                 onClick = {
                     if (item.id.contains("Search")) {
                         navController.navigate(Screen.Search.passSearchDetails(searchId = item.id))
-                    } else {
-                        //
+                    } else if (item.id.contains("Sort")) {
+                        navController.navigate(Screen.Sort.passSortDetails(sortId = item.id))
                     }
                 },
                 colors = ButtonDefaults.buttonColors(

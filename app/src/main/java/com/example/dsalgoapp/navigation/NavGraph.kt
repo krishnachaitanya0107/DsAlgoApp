@@ -11,6 +11,7 @@ import com.example.dsalgoapp.ui.screens.algo_detail.AlgoDetailScreen
 import com.example.dsalgoapp.ui.screens.ds_detail.DsDetailScreen
 import com.example.dsalgoapp.ui.screens.home.HomeScreen
 import com.example.dsalgoapp.ui.screens.search.SearchScreen
+import com.example.dsalgoapp.ui.screens.sort.SortScreen
 import com.example.dsalgoapp.ui.screens.splash.SplashScreen
 import com.example.dsalgoapp.util.Constants
 
@@ -58,6 +59,16 @@ fun SetUpNavGraph(navController: NavHostController) {
             )
         ) {
             SearchScreen(navController = navController)
+        }
+        composable(
+            route = Screen.Sort.route,
+            arguments = listOf(
+                navArgument(Constants.SORT_ID) {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            SortScreen(navController = navController)
         }
     }
 

@@ -26,4 +26,9 @@ sealed class Screen(val route: String) {
             return "search_screen/$searchId"
         }
     }
+    object Sort : Screen("sort_screen/{sort_id}") {
+        fun passSortDetails(sortId:String): String {
+            return "sort_screen/$sortId"
+        }
+    }
 }

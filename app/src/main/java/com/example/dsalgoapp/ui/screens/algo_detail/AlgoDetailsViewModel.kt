@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.dsalgoapp.R
-import com.example.dsalgoapp.data.ListItem2
+import com.example.dsalgoapp.data.DsAlgoSubItem
 import com.example.dsalgoapp.util.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -16,7 +16,7 @@ class AlgoDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    var details = ListItem2(name = "Loading...", image = R.drawable.ic_launcher_foreground, items = arrayListOf(), id = "")
+    var details = DsAlgoSubItem(name = "Loading...", image = R.drawable.ic_launcher_foreground, items = arrayListOf(), id = "")
 
     init {
         viewModelScope.launch(Dispatchers.IO) {

@@ -7,17 +7,16 @@ import androidx.compose.material.ContentAlpha
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
-import com.example.dsalgoapp.data.ListItem2
+import com.example.dsalgoapp.data.DsAlgoSubItem
 
 @Composable
 fun ListContent(
-    item: ListItem2,
+    item: DsAlgoSubItem,
     modifier: Modifier
 ) {
     Box(

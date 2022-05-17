@@ -1,6 +1,7 @@
 package com.example.dsalgoapp.ui.screens.algo_detail
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -9,7 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.dsalgoapp.data.ListItem3
+import com.example.dsalgoapp.data.DsAlgoDetailsItem
 import com.example.dsalgoapp.navigation.Screen
 
 @Composable
@@ -19,14 +20,16 @@ fun AlgoDetailScreen(
 ) {
 
     Scaffold(content = {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(Dp(10f)),
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(all = Dp(10f)),
+
+        LazyColumn(
+            contentPadding = PaddingValues(all = Dp(10f)),
+            verticalArrangement = Arrangement.spacedBy(Dp(10f))
         ) {
-            algoDetailsViewModel.details.items.forEach {
-                AlgoListItem(item = it, navController = navController)
+            items(count = algoDetailsViewModel.details.items.size) { index ->
+                AlgoListItem(
+                    item = algoDetailsViewModel.details.items[index],
+                    navController = navController
+                )
             }
         }
     })
@@ -34,7 +37,7 @@ fun AlgoDetailScreen(
 }
 
 @Composable
-fun AlgoListItem(item: ListItem3, navController: NavController) {
+fun AlgoListItem(item: DsAlgoDetailsItem, navController: NavController) {
     Surface(
         modifier = Modifier
             .fillMaxWidth(),

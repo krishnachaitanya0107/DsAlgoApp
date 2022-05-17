@@ -1,5 +1,6 @@
 package com.example.dsalgoapp.ui.screens.sort
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -10,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -37,6 +39,8 @@ fun SortScreen(
 
 @Composable
 fun SettingsContent(sortViewModel: SortViewModel) {
+
+    val context= LocalContext.current
 
     Surface(
         modifier = Modifier
@@ -104,17 +108,21 @@ fun SettingsContent(sortViewModel: SortViewModel) {
 
             Spacer(modifier = Modifier.height(Dp(10f)))
 
+            Text("Visualize :")
+
+            Spacer(modifier = Modifier.height(Dp(10f)))
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Button(
-                    onClick = { /*to do*/ }, colors = ButtonDefaults.buttonColors(
+                    onClick = { Toast.makeText( context,"Work In Progress..",Toast.LENGTH_SHORT).show() }, colors = ButtonDefaults.buttonColors(
                         backgroundColor = MaterialTheme.colors.primary,
                         contentColor = Color.White
                     )
                 ) {
-                    Text(text = "Real Time Visualization")
+                    Text(text = "Real Time")
                 }
                 Button(
                     onClick = { generateSteps(sortViewModel = sortViewModel) },
@@ -228,11 +236,13 @@ fun generateSteps(sortViewModel: SortViewModel) {
         generateBubbleSortSteps(sortViewModel = sortViewModel)
     } else if (sortViewModel.sortType.contains("selection")) {
         generateSelectionSortSteps(sortViewModel = sortViewModel)
+    } else if(sortViewModel.sortType.contains("insertion")){
+        generateInsertionSortSteps(sortViewModel = sortViewModel)
     }
 }
 
 fun getColorState(step: Int, index: Int, sortViewModel: SortViewModel): Color {
-    if (sortViewModel.sortType.contains("bubble")) {
+    if (sortViewModel.sortType.contains("bubble") || sortViewModel.sortType.contains("selection")) {
         val arrSize = sortViewModel.steps[step].modifiedArrSize
         val curPosition = sortViewModel.steps[step].currentComparisons
 
@@ -242,13 +252,12 @@ fun getColorState(step: Int, index: Int, sortViewModel: SortViewModel): Color {
             Green
         else
             Color.Transparent
-    } else if (sortViewModel.sortType.contains("selection")) {
-        val arrSize = sortViewModel.steps[step].modifiedArrSize
+    } else if (sortViewModel.sortType.contains("insertion")) {
         val curPosition = sortViewModel.steps[step].currentComparisons
 
         return if (curPosition.contains(index))
             Gray
-        else if (index > arrSize)
+        else if (step == sortViewModel.steps.size-1)
             Green
         else
             Color.Transparent
@@ -378,6 +387,73 @@ fun generateSelectionSortSteps(sortViewModel: SortViewModel) {
             step = "Array is sorted Successfully",
             arrayState = arrayState,
             modifiedArrSize = -1
+        )
+    )
+
+}
+
+fun generateInsertionSortSteps(sortViewModel: SortViewModel){
+    sortViewModel.emptySteps()
+    val numbers = arrayListOf<Int>()
+    for (i in sortViewModel.inputArray) {
+        numbers.add(i)
+    }
+    val size = numbers.size - 1
+    var arrayState = "01234567"
+
+    val greaterOrLesser = if (sortViewModel.selectedOption == "Ascending") "greater" else "less"
+
+    for (i in 1..size){
+        val num = numbers[i]
+        var hasMoved=false
+        var notPlaced=true
+        val t=arrayState[i]
+
+        for(j in i-1 downTo 0){
+            if(checkGreaterOrLesser(numbers[j],num,sortViewModel.selectedOption)){
+                arrayState = arrayState.substring(0,j+1)+arrayState[j]+arrayState.substring(j+2)
+                sortViewModel.addSteps(
+                    SortingStep(
+                        step = "${numbers[j]} is $greaterOrLesser than $num\nShifting ${numbers[j]} to the right\nFinding position for $num",
+                        arrayState = arrayState,
+                        currentComparisons = arrayListOf(j,j+1)
+                    )
+                )
+                numbers[j+1]=numbers[j]
+                hasMoved=true
+            } else {
+                arrayState = arrayState.substring(0,j+1)+t+arrayState.substring(j+2)
+                sortViewModel.addSteps(
+                    SortingStep(
+                        step = "Inserting $num at index ${j+1}",
+                        arrayState = arrayState,
+                        currentComparisons = arrayListOf(j+1)
+                    )
+                )
+                numbers[j+1]=num
+                notPlaced=false
+                break
+            }
+        }
+
+        if(hasMoved && notPlaced){
+            numbers[0]=num
+            arrayState=t+arrayState.substring(1)
+            sortViewModel.addSteps(
+                SortingStep(
+                    step = "Inserting $num at index 0",
+                    arrayState = arrayState,
+                    currentComparisons = arrayListOf(0)
+                )
+            )
+        }
+
+    }
+
+    sortViewModel.addSteps(
+        SortingStep(
+            step = "Array is sorted Successfully",
+            arrayState = arrayState
         )
     )
 

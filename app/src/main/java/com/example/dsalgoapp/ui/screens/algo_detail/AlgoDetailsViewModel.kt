@@ -1,5 +1,8 @@
 package com.example.dsalgoapp.ui.screens.algo_detail
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,6 +20,24 @@ class AlgoDetailsViewModel @Inject constructor(
 ) : ViewModel() {
 
     var details = DsAlgoSubItem(name = "Loading...", image = R.drawable.ic_launcher_foreground, items = arrayListOf(), id = "")
+
+    var inputArray by mutableStateOf(listOf(0, 0, 0, 0, 0, 0, 0, 0))
+
+    var numberToSearch = mutableStateOf("")
+
+    var openSearchInputDialog = mutableStateOf(false)
+
+    var openSortInputDialog = mutableStateOf(false)
+
+    var openManualInputDialog = mutableStateOf(false)
+
+    var selectedItemId = mutableStateOf("")
+
+    var sortOrder = mutableStateOf("Ascending")
+
+    fun updateInputArray(index: Int, newNum: Int) {
+        inputArray = inputArray.toMutableList().also { it[index] = newNum }
+    }
 
     init {
         viewModelScope.launch(Dispatchers.IO) {

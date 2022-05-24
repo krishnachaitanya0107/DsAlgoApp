@@ -238,6 +238,8 @@ fun generateSteps(sortViewModel: SortViewModel) {
         generateSelectionSortSteps(sortViewModel = sortViewModel)
     } else if(sortViewModel.sortType.contains("insertion")){
         generateInsertionSortSteps(sortViewModel = sortViewModel)
+    } else if(sortViewModel.sortType.contains("quick")){
+        //generateQuickSortSteps(sortViewModel = sortViewModel)
     }
 }
 
@@ -261,6 +263,8 @@ fun getColorState(step: Int, index: Int, sortViewModel: SortViewModel): Color {
             Green
         else
             Color.Transparent
+    } else if(sortViewModel.sortType.contains("quick")){
+        Color.Transparent
     }
     return Gray
 }
@@ -458,6 +462,50 @@ fun generateInsertionSortSteps(sortViewModel: SortViewModel){
     )
 
 }
+
+/*fun generateQuickSortSteps(sortViewModel: SortViewModel){
+    sortViewModel.emptySteps()
+    val numbers = arrayListOf<Int>()
+    for (i in sortViewModel.inputArray) {
+        numbers.add(i)
+    }
+    val size = numbers.size - 1
+    var arrayState = "01234567"
+
+    val greaterOrLesser = if (sortViewModel.selectedOption == "Ascending") "greater" else "less"
+
+    quickSort(numbers,0,size,arrayState,greaterOrLesser)
+}
+
+fun quickSort(input:ArrayList<Int>,left:Int,right:Int,arrayState:String,greaterOrLesser:String){
+    if(right<=left){
+        return
+    }
+
+    val pivot=(left+right)/2
+
+    var i=left
+    var j=right
+
+    while(i<=j){
+        while(input[i]<pivot)
+            i++
+        while (input[j]>pivot)
+            j--
+
+        if(i<=j){
+            val temp=input[i]
+            input[i]=input[j]
+            input[j]=temp
+            i++
+            j--
+        }
+    }
+
+    quickSort(input,left,i-1,arrayState,greaterOrLesser)
+    quickSort(input,i,right,arrayState,greaterOrLesser)
+
+}*/
 
 fun checkGreaterOrLesser(num1: Int, num2: Int, order: String): Boolean {
     return if (order == "Ascending") {

@@ -41,9 +41,9 @@ class AlgoDetailsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            val details_id = savedStateHandle.get<String>(Constants.ALGO_DETAILS_KEY)
-            if (details_id != null) {
-                val indices = details_id.split(" ")
+            val detailsId = savedStateHandle.get<String>(Constants.ALGO_DETAILS_KEY)
+            if (detailsId != null) {
+                val indices = detailsId.split(" ")
                 details = Constants.data[indices[0].toInt()].items[indices[1].toInt()]
             }
         }

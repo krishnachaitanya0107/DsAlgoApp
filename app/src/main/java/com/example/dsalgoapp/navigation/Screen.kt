@@ -12,6 +12,7 @@ sealed class Screen(val route: String) {
             return res
         }
     }
+
     object DsDetail : Screen("ds_detail_screen/{ds_details_id}") {
         fun passDsDetails(details: ArrayList<Int>): String {
             var res = "ds_detail_screen/"
@@ -21,14 +22,23 @@ sealed class Screen(val route: String) {
             return res
         }
     }
-    object Search : Screen("search_screen/{search_id}") {
-        fun passSearchDetails(searchId:String): String {
-            return "search_screen/$searchId"
-        }
-    }
-    object Sort : Screen("sort_screen/{sort_id}") {
-        fun passSortDetails(sortId:String): String {
-            return "sort_screen/$sortId"
+
+    object Steps : Screen("steps_screen/{steps_type}/{sort_order}/{num_to_search}/{input_array}") {
+        fun passStepsDetails(
+            stepsType: String,
+            inputArray: List<Int>,
+            sortOrder: String,
+            numToSearch: String
+        ): String {
+            var res = "steps_screen/$stepsType/$sortOrder/$numToSearch/"
+            inputArray.forEachIndexed { index, it ->
+                res = if (index == 0) {
+                    "$res$it"
+                } else {
+                    "$res $it"
+                }
+            }
+            return res
         }
     }
 }

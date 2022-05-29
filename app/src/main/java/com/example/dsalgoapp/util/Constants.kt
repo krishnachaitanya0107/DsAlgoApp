@@ -9,8 +9,10 @@ object Constants {
 
     const val ALGO_DETAILS_KEY = "algo_details_id"
     const val DS_DETAILS_KEY = "ds_details_id"
-    const val SEARCH_ID = "search_id"
-    const val SORT_ID = "sort_id"
+    const val INPUT_ARRAY_KEY = "input_array"
+    const val NUMBER_TO_SEARCH_KEY = "num_to_search"
+    const val SORT_ORDER_KEY = "sort_order"
+    const val STEPS_TYPE_KEY = "steps_type"
 
     val data = arrayListOf(
         DsAlgoItem(

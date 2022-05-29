@@ -139,8 +139,11 @@ fun AlgoDetailScreen(
                         onClick = {
                             algoDetailsViewModel.openSearchInputDialog.value=false
                             navController.navigate(
-                                Screen.Search.passSearchDetails(
-                                    searchId = algoDetailsViewModel.selectedItemId.value
+                                Screen.Steps.passStepsDetails(
+                                    stepsType = algoDetailsViewModel.selectedItemId.value,
+                                    inputArray = algoDetailsViewModel.inputArray,
+                                    sortOrder = algoDetailsViewModel.sortOrder.value,
+                                    numToSearch = algoDetailsViewModel.numberToSearch.value.ifEmpty { "0" }
                                 )
                             )
                         },
@@ -228,8 +231,11 @@ fun AlgoDetailScreen(
                         onClick = {
                             algoDetailsViewModel.openSortInputDialog.value=false
                             navController.navigate(
-                                Screen.Sort.passSortDetails(
-                                    sortId = algoDetailsViewModel.selectedItemId.value
+                                Screen.Steps.passStepsDetails(
+                                    stepsType = algoDetailsViewModel.selectedItemId.value,
+                                    inputArray = algoDetailsViewModel.inputArray,
+                                    sortOrder = algoDetailsViewModel.sortOrder.value,
+                                    numToSearch = "0"
                                 )
                             )
                         },
@@ -333,23 +339,44 @@ fun AlgoListItem(
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(Dp(10f)))
-            Button(
-                onClick = {
-                    if (item.id.contains("Search")) {
-                        algoDetailsViewModel.openSearchInputDialog.value = true
-                        algoDetailsViewModel.selectedItemId.value = item.id
-                    } else if (item.id.contains("Sort")) {
-                        algoDetailsViewModel.openSortInputDialog.value = true
-                        algoDetailsViewModel.selectedItemId.value = item.id
-                    }
-                },
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = MaterialTheme.colors.primary,
-                    contentColor = Color.White
-                )
-            ) {
-                Text(text = "Visualize")
+
+            Text("Visualize :")
+
+            Spacer(modifier = Modifier.height(Dp(10f)))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ){
+
+                Button(
+                    onClick = { /*to do*/ }, colors = ButtonDefaults.buttonColors(
+                        backgroundColor = MaterialTheme.colors.primary,
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text(text = "Real Time")
+                }
+
+                Button(
+                    onClick = {
+                        if (item.id.contains("Search")) {
+                            algoDetailsViewModel.openSearchInputDialog.value = true
+                            algoDetailsViewModel.selectedItemId.value = item.id
+                        } else if (item.id.contains("Sort")) {
+                            algoDetailsViewModel.openSortInputDialog.value = true
+                            algoDetailsViewModel.selectedItemId.value = item.id
+                        }
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = MaterialTheme.colors.primary,
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text(text = "Step Wise")
+                }
             }
+
             Spacer(modifier = Modifier.height(Dp(10f)))
         }
     }

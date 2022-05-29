@@ -41,4 +41,24 @@ sealed class Screen(val route: String) {
             return res
         }
     }
+
+    object RealTime : Screen("rt_screen/{steps_type}/{sort_order}/{num_to_search}/{input_array}") {
+        fun passDetails(
+            stepsType: String,
+            inputArray: List<Int>,
+            sortOrder: String,
+            numToSearch: String
+        ): String {
+            var res = "rt_screen/$stepsType/$sortOrder/$numToSearch/"
+            inputArray.forEachIndexed { index, it ->
+                res = if (index == 0) {
+                    "$res$it"
+                } else {
+                    "$res $it"
+                }
+            }
+            return res
+        }
+    }
+
 }

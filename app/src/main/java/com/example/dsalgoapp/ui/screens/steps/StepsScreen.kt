@@ -30,7 +30,7 @@ fun StepsScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(all = Dp(10f)),
-            verticalArrangement = Arrangement.SpaceBetween
+            verticalArrangement = Arrangement.spacedBy(Dp(10f))
         ) {
             TitleContent(stepsViewModel = stepsViewModel)
             StepsContent(stepsViewModel = stepsViewModel)
@@ -45,7 +45,7 @@ fun TitleContent(stepsViewModel: StepsViewModel) {
 
     if (stepsViewModel.stepsType.contains("Search")) {
         title = "Number to search :"
-        subtitle = stepsViewModel.userInputNumberToSearch
+        subtitle = stepsViewModel.numberToSearch
     } else if (stepsViewModel.stepsType.contains("Sort")) {
         title = "Sort Order :"
         subtitle = stepsViewModel.sortOrder
@@ -62,28 +62,22 @@ fun TitleContent(stepsViewModel: StepsViewModel) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(all = Dp(10f)),
-            verticalArrangement = Arrangement.SpaceBetween
+            verticalArrangement = Arrangement.spacedBy(Dp(10f))
         ) {
 
             Text("Input Array :")
-
-            Spacer(modifier = Modifier.height(Dp(10f)))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                stepsViewModel.userInputArray.forEachIndexed { index, num ->
+                stepsViewModel.inputArray.forEachIndexed { index, num ->
                     Text(text = num.toString())
                     Spacer(modifier = Modifier.width(Dp(10f)))
                 }
             }
 
-            Spacer(modifier = Modifier.height(Dp(10f)))
-
             Text(text = title)
-
-            Spacer(modifier = Modifier.height(Dp(10f)))
 
             Text(text = subtitle)
         }
@@ -116,7 +110,7 @@ fun StepsContent(stepsViewModel: StepsViewModel) {
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            stepsViewModel.userInputArray.forEachIndexed { index, num ->
+                            stepsViewModel.inputArray.forEachIndexed { index, num ->
                                 Box(
                                     modifier =
                                     Modifier
@@ -173,7 +167,7 @@ fun StepsContent(stepsViewModel: StepsViewModel) {
                                         )
                                 ) {
                                     Text(
-                                        text = stepsViewModel.userInputArray[num.digitToInt()].toString(),
+                                        text = stepsViewModel.inputArray[num.digitToInt()].toString(),
                                         modifier = Modifier.padding(Dp(3f))
                                     )
                                 }
@@ -278,8 +272,8 @@ fun generateSteps(stepsViewModel: StepsViewModel) {
 fun generateLinearSearchSteps(stepsViewModel: StepsViewModel) {
     reset(stepsViewModel)
 
-    val arr = stepsViewModel.userInputArray
-    val searchFor = stepsViewModel.userInputNumberToSearch.toInt()
+    val arr = stepsViewModel.inputArray
+    val searchFor = stepsViewModel.numberToSearch.toInt()
 
     for (i in arr.indices) {
         if (searchFor == arr[i]) {
@@ -298,8 +292,8 @@ fun generateLinearSearchSteps(stepsViewModel: StepsViewModel) {
 fun generateBinarySearchSteps(stepsViewModel: StepsViewModel) {
     reset(stepsViewModel)
 
-    val arr = stepsViewModel.userInputArray
-    val searchFor = stepsViewModel.userInputNumberToSearch.toInt()
+    val arr = stepsViewModel.inputArray
+    val searchFor = stepsViewModel.numberToSearch.toInt()
 
     var start = 0
     var end = arr.size - 1
@@ -336,7 +330,7 @@ fun generateBinarySearchSteps(stepsViewModel: StepsViewModel) {
 fun generateBubbleSortSteps(stepsViewModel: StepsViewModel) {
     stepsViewModel.emptySortSteps()
     val numbers = arrayListOf<Int>()
-    for (i in stepsViewModel.userInputArray) {
+    for (i in stepsViewModel.inputArray) {
         numbers.add(i)
     }
     val size = numbers.size - 1
@@ -391,7 +385,7 @@ fun generateBubbleSortSteps(stepsViewModel: StepsViewModel) {
 fun generateSelectionSortSteps(stepsViewModel: StepsViewModel) {
     stepsViewModel.emptySortSteps()
     val numbers = arrayListOf<Int>()
-    for (i in stepsViewModel.userInputArray) {
+    for (i in stepsViewModel.inputArray) {
         numbers.add(i)
     }
     val size = numbers.size - 1
@@ -468,7 +462,7 @@ fun generateSelectionSortSteps(stepsViewModel: StepsViewModel) {
 fun generateInsertionSortSteps(stepsViewModel: StepsViewModel) {
     stepsViewModel.emptySortSteps()
     val numbers = arrayListOf<Int>()
-    for (i in stepsViewModel.userInputArray) {
+    for (i in stepsViewModel.inputArray) {
         numbers.add(i)
     }
     val size = numbers.size - 1

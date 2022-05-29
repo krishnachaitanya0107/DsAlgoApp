@@ -14,16 +14,15 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class StepsViewModel@Inject constructor(
+class StepsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel()  {
 
     var stepsType = ""
-    var userInputArray = listOf(0, 0, 0, 0, 0, 0, 0, 0)
-    var userInputNumberToSearch = ""
+    var inputArray = listOf(0, 0, 0, 0, 0, 0, 0, 0)
+    var numberToSearch = ""
     var sortOrder = ""
-    //var inputArray by mutableStateOf(userInputArray)
-    //var numberToSearch = mutableStateOf(userInputNumberToSearch)
+    //var inputArray by mutableStateOf(listOf(0, 0, 0, 0, 0, 0, 0, 0))
 
     var numberFound = mutableStateOf(false)
 
@@ -67,18 +66,18 @@ class StepsViewModel@Inject constructor(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             stepsType = savedStateHandle.get<String>(Constants.STEPS_TYPE_KEY) ?: ""
-            userInputNumberToSearch =
+            numberToSearch =
                 savedStateHandle.get<String>(Constants.NUMBER_TO_SEARCH_KEY) ?: "0"
             sortOrder = savedStateHandle.get<String>(Constants.SORT_ORDER_KEY) ?: "Ascending"
-            val userInputArrayString = savedStateHandle.get<String>(Constants.INPUT_ARRAY_KEY)
+            val inputArrayString = savedStateHandle.get<String>(Constants.INPUT_ARRAY_KEY)
 
-            userInputArray =
-                userInputArrayString?.split(" ")?.map { if (it.isBlank()) 0 else it.toInt() }
+            inputArray =
+                inputArrayString?.split(" ")?.map { if (it.isBlank()) 0 else it.toInt() }
                     ?.toList()
                     ?: listOf(0, 0, 0, 0, 0, 0, 0, 0)
 
             if(stepsType.contains("binary")){
-                userInputArray = userInputArray.sorted()
+                inputArray = inputArray.sorted()
             }
 
         }

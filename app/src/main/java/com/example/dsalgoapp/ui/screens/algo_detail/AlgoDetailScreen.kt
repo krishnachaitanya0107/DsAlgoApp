@@ -62,12 +62,11 @@ fun AlgoDetailScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(Dp(12f))
+                        .padding(Dp(12f)),
+                    verticalArrangement = Arrangement.spacedBy(Dp(10f))
                 ) {
 
                     Text("Input Array :")
-
-                    Spacer(modifier = Modifier.height(Dp(10f)))
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -79,11 +78,7 @@ fun AlgoDetailScreen(
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(Dp(10f)))
-
                     Text("Input Type :")
-
-                    Spacer(modifier = Modifier.height(Dp(10f)))
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -110,8 +105,6 @@ fun AlgoDetailScreen(
                             Text(text = "Randomize")
                         }
                     }
-
-                    Spacer(modifier = Modifier.height(Dp(10f)))
 
                     OutlinedTextField(
                         label = { Text(text = "Number to search :") },
@@ -168,12 +161,11 @@ fun AlgoDetailScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(Dp(12f))
+                        .padding(Dp(12f)),
+                    verticalArrangement = Arrangement.spacedBy(Dp(10f))
                 ) {
 
                     Text("Input Array :")
-
-                    Spacer(modifier = Modifier.height(Dp(10f)))
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -185,11 +177,7 @@ fun AlgoDetailScreen(
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(Dp(10f)))
-
                     Text("Input Type :")
-
-                    Spacer(modifier = Modifier.height(Dp(10f)))
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -217,15 +205,9 @@ fun AlgoDetailScreen(
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(Dp(10f)))
-
                     Text("Sort Order :")
 
-                    Spacer(modifier = Modifier.height(Dp(10f)))
-
                     CustomRadioGroup(algoDetailsViewModel = algoDetailsViewModel)
-
-                    Spacer(modifier = Modifier.height(Dp(10f)))
 
                     Button(
                         onClick = {
@@ -261,33 +243,17 @@ fun AlgoDetailScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(Dp(12f))
-                        .verticalScroll(rememberScrollState())
+                        .verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(Dp(10f))
                 ) {
                     Text(text = "Enter the input array")
 
-                    Spacer(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(Dp(10f))
-                    )
-
                     Text(text = "Make sure the inputs are between 0 & 99")
-
-                    Spacer(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(Dp(10f))
-                    )
 
                     for(i in 0 until 8){
                         OutLineTextField(
                             algoDetailsViewModel = algoDetailsViewModel,
                             index = i
-                        )
-                        Spacer(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(Dp(10f))
                         )
                     }
 
@@ -327,22 +293,18 @@ fun AlgoListItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(all = Dp(10f)),
-            verticalArrangement = Arrangement.SpaceBetween
+            verticalArrangement = Arrangement.spacedBy(Dp(10f))
         ) {
             Text(
                 text = item.name,
                 modifier = Modifier.fillMaxWidth()
             )
-            Spacer(modifier = Modifier.height(Dp(10f)))
             Text(
                 text = item.description,
                 modifier = Modifier.fillMaxWidth()
             )
-            Spacer(modifier = Modifier.height(Dp(10f)))
 
             Text("Visualize :")
-
-            Spacer(modifier = Modifier.height(Dp(10f)))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -376,8 +338,6 @@ fun AlgoListItem(
                     Text(text = "Step Wise")
                 }
             }
-
-            Spacer(modifier = Modifier.height(Dp(10f)))
         }
     }
 
@@ -421,17 +381,10 @@ fun OutLineTextField(algoDetailsViewModel: AlgoDetailsViewModel, index: Int) {
 }
 
 fun generateRandomInput(algoDetailsViewModel: AlgoDetailsViewModel) {
-    /*if (searchViewModel.searchType.contains("binary")) {
-        algoDetailsViewModel.inputArray.forEachIndexed { index, _ ->
-            val random = Random.nextInt(12 * (index), 12 * (index + 1))
-            algoDetailsViewModel.updateInputArray(index = index, newNum = random)
-        }
-    } else if (searchViewModel.searchType.contains("linear")) {*/
     algoDetailsViewModel.inputArray.forEachIndexed { index, _ ->
         val random = Random.nextInt(0, 100)
         algoDetailsViewModel.updateInputArray(index = index, newNum = random)
     }
-    //}
 }
 
 

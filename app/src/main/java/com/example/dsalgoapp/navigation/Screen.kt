@@ -61,4 +61,10 @@ sealed class Screen(val route: String) {
         }
     }
 
+    object DsVisualise : Screen("ds_visualise_screen/{ds_id}") {
+        fun passDsId(dsId: String): String {
+            return "ds_visualise_screen/$dsId"
+        }
+    }
+
 }

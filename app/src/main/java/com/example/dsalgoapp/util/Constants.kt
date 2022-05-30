@@ -13,6 +13,7 @@ object Constants {
     const val NUMBER_TO_SEARCH_KEY = "num_to_search"
     const val SORT_ORDER_KEY = "sort_order"
     const val STEPS_TYPE_KEY = "steps_type"
+    const val DS_ID = "ds_id"
 
     val data = arrayListOf(
         DsAlgoItem(
@@ -64,24 +65,34 @@ object Constants {
             items = arrayListOf(
                 DsAlgoSubItem(
                     name = "Stack",
-                    image = R.drawable.ic_launcher_foreground,
-                    id = "Stack"
+                    image = R.drawable.stack,
+                    id = "Stack",
+                    description = "Stack is a linear data structure which follows a particular order in which the operations are performed. The order may be LIFO(Last In First Out) or FILO(First In Last Out).There are many real-life examples of a stack." +
+                            " Consider an example of plates stacked over one another in the canteen. The plate which is at the top is the first one to be removed, i.e. the plate which has been placed at the bottommost position remains in the stack for the longest period of time."
                 ), DsAlgoSubItem(
                     name = "Queue",
-                    image = R.drawable.ic_launcher_foreground,
-                    id = "Queue"
+                    image = R.drawable.queue,
+                    id = "Queue",
+                    description = "Queue is an abstract data structure, somewhat similar to Stacks. Unlike stacks, a queue is open at both its ends. One end is always used to insert data (enqueue) and the other is used to remove data (dequeue). " +
+                            "Queue follows First-In-First-Out methodology, i.e., the data item stored first will be accessed first.A real-world example of queue can be a single-lane one-way road, where the vehicle enters first, exits first. More real-world examples can be seen as queues at the ticket windows and bus-stops."
                 ), DsAlgoSubItem(
                     name = "Linked List",
-                    image = R.drawable.ic_launcher_foreground,
-                    id = "LinkedList"
+                    image = R.drawable.linked_list,
+                    id = "LinkedList",
+                    description = "A linked list is a sequence of data structures, which are connected together via links.Linked List is a sequence of links which contains items. Each link contains a connection to another link. Linked list is the second most-used data structure after array." +
+                            "Linked list can be visualized as a chain of nodes, where every node points to the next node."
                 ), DsAlgoSubItem(
                     name = "Tree",
-                    image = R.drawable.ic_launcher_foreground,
-                    id = "Tree"
+                    image = R.drawable.tree,
+                    id = "Tree",
+                    description = "We have all watched trees from our childhood. It has roots, stems, branches and leaves. It was observed long back that each leaf of a tree can be traced to root via a unique path. Hence tree structure was used to explain hierarchical relationships, e.g. family tree, animal kingdom classification, etc." +
+                            "This hierarchical structure of trees is used in Computer science as an abstract data type for various applications like data storage, search and sort algorithms.A tree is a hierarchical data structure defined as a collection of nodes. Nodes represent value and nodes are connected by edges."
                 ), DsAlgoSubItem(
                     name = "Graph",
-                    image = R.drawable.ic_launcher_foreground,
-                    id = "Graph"
+                    image = R.drawable.graph,
+                    id = "Graph",
+                    description = "A graph is a pictorial representation of a set of objects where some pairs of objects are connected by links. The interconnected objects are represented by points termed as vertices, and the links that connect the vertices are called edges.Mathematical graphs can be represented in data structure." +
+                            " We can represent a graph using an array of vertices and a two-dimensional array of edges."
                 )
             )
         )

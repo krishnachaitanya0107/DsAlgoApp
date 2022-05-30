@@ -147,7 +147,7 @@ fun StepsContent(stepsViewModel: StepsViewModel) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(all = Dp(10f)),
-                        verticalArrangement = Arrangement.SpaceBetween
+                        verticalArrangement = Arrangement.spacedBy(Dp(10f))
                     ) {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
@@ -175,6 +175,13 @@ fun StepsContent(stepsViewModel: StepsViewModel) {
                             }
                         }
                         Text(text = stepsViewModel.sortSteps[item].step)
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(text = "No of Comparisons : "+stepsViewModel.sortSteps[item].noOfComparisons)
+                            Text(text = "No of Swaps : "+stepsViewModel.sortSteps[item].noOfSwaps)
+                        }
                     }
                 }
                 Spacer(modifier = Modifier.height(Dp(10f)))
@@ -335,29 +342,45 @@ fun generateBubbleSortSteps(stepsViewModel: StepsViewModel) {
     }
     val size = numbers.size - 1
     var arrayState = "01234567"
+    var noOfComparisons = 0
+    var noOfSwaps = 0
 
     val greaterOrLesser = if (stepsViewModel.sortOrder == "Ascending") "greater" else "less"
 
     for (pass in 0 until size) {
         for (currentPosition in 0 until (size - pass)) {
+            noOfComparisons++
             if (checkGreaterOrLesser(
                     num1 = numbers[currentPosition],
                     num2 = numbers[currentPosition + 1],
                     order = stepsViewModel.sortOrder
                 )
             ) {
+                stepsViewModel.addSteps(
+                    SortingStep(
+                        step = "${numbers[currentPosition]} is $greaterOrLesser than ${numbers[currentPosition + 1]}",
+                        arrayState = arrayState,
+                        currentComparisons = arrayListOf(currentPosition, currentPosition + 1),
+                        modifiedArrSize = size - pass,
+                        noOfComparisons = noOfComparisons,
+                        noOfSwaps = noOfSwaps
+                    )
+                )
                 val temp = numbers[currentPosition]
                 numbers[currentPosition] = numbers[currentPosition + 1]
                 numbers[currentPosition + 1] = temp
+                noOfSwaps++
                 arrayState =
                     arrayState.substring(0, currentPosition) + arrayState[currentPosition + 1] +
                             arrayState[currentPosition] + arrayState.substring(currentPosition + 2)
                 stepsViewModel.addSteps(
                     SortingStep(
-                        step = "${numbers[currentPosition + 1]} is $greaterOrLesser than ${numbers[currentPosition]}\nSwapping ${numbers[currentPosition + 1]} with ${numbers[currentPosition]}",
+                        step = "Swapping ${numbers[currentPosition + 1]} with ${numbers[currentPosition]}",
                         arrayState = arrayState,
                         currentComparisons = arrayListOf(currentPosition, currentPosition + 1),
-                        modifiedArrSize = size - pass
+                        modifiedArrSize = size - pass,
+                        noOfComparisons = noOfComparisons,
+                        noOfSwaps = noOfSwaps
                     )
                 )
             } else {
@@ -366,7 +389,9 @@ fun generateBubbleSortSteps(stepsViewModel: StepsViewModel) {
                         step = "${numbers[currentPosition]} is not $greaterOrLesser than ${numbers[currentPosition + 1]}\nNo Swapping done",
                         arrayState = arrayState,
                         currentComparisons = arrayListOf(currentPosition, currentPosition + 1),
-                        modifiedArrSize = size - pass
+                        modifiedArrSize = size - pass,
+                        noOfComparisons = noOfComparisons,
+                        noOfSwaps = noOfSwaps
                     )
                 )
             }
@@ -376,7 +401,9 @@ fun generateBubbleSortSteps(stepsViewModel: StepsViewModel) {
         SortingStep(
             step = "Array is sorted Successfully",
             arrayState = arrayState,
-            modifiedArrSize = -1
+            modifiedArrSize = -1,
+            noOfComparisons = noOfComparisons,
+            noOfSwaps = noOfSwaps
         )
     )
 
@@ -390,6 +417,8 @@ fun generateSelectionSortSteps(stepsViewModel: StepsViewModel) {
     }
     val size = numbers.size - 1
     var arrayState = "01234567"
+    var noOfComparisons = 0
+    var noOfSwaps = 0
 
     val greaterOrLesser = if (stepsViewModel.sortOrder == "Ascending") "greater" else "less"
     val maxOrMin = if (stepsViewModel.sortOrder == "Ascending") "max" else "min"
@@ -397,6 +426,7 @@ fun generateSelectionSortSteps(stepsViewModel: StepsViewModel) {
     for (i in size downTo 1) {
         var num = i
         for (j in 0 until i) {
+            noOfComparisons++
             if (checkGreaterOrLesser(
                     numbers[j],
                     numbers[num],
@@ -408,7 +438,9 @@ fun generateSelectionSortSteps(stepsViewModel: StepsViewModel) {
                         step = "${numbers[j]} is $greaterOrLesser than ${numbers[num]}\nSetting new $maxOrMin index to $j",
                         arrayState = arrayState,
                         currentComparisons = arrayListOf(j, num),
-                        modifiedArrSize = i
+                        modifiedArrSize = i,
+                        noOfComparisons = noOfComparisons,
+                        noOfSwaps = noOfSwaps
                     )
                 )
                 num = j
@@ -418,7 +450,9 @@ fun generateSelectionSortSteps(stepsViewModel: StepsViewModel) {
                         step = "${numbers[j]} is not $greaterOrLesser than ${numbers[num]}",
                         arrayState = arrayState,
                         currentComparisons = arrayListOf(j, num),
-                        modifiedArrSize = i
+                        modifiedArrSize = i,
+                        noOfComparisons = noOfComparisons,
+                        noOfSwaps = noOfSwaps
                     )
                 )
             }
@@ -427,6 +461,7 @@ fun generateSelectionSortSteps(stepsViewModel: StepsViewModel) {
             val temp = numbers[i]
             numbers[i] = numbers[num]
             numbers[num] = temp
+            noOfSwaps++
             arrayState =
                 arrayState.substring(0, num) + arrayState[i] + arrayState.substring(num + 1, i) +
                         arrayState[num] + arrayState.substring(i + 1)
@@ -435,7 +470,9 @@ fun generateSelectionSortSteps(stepsViewModel: StepsViewModel) {
                     step = "Swapping ${numbers[num]} with ${numbers[i]}",
                     arrayState = arrayState,
                     currentComparisons = arrayListOf(i, num),
-                    modifiedArrSize = i
+                    modifiedArrSize = i,
+                    noOfComparisons = noOfComparisons,
+                    noOfSwaps = noOfSwaps
                 )
             )
         } else {
@@ -443,7 +480,9 @@ fun generateSelectionSortSteps(stepsViewModel: StepsViewModel) {
                 SortingStep(
                     step = "No Swapping performed",
                     arrayState = arrayState,
-                    modifiedArrSize = i
+                    modifiedArrSize = i,
+                    noOfComparisons = noOfComparisons,
+                    noOfSwaps = noOfSwaps
                 )
             )
         }
@@ -453,7 +492,9 @@ fun generateSelectionSortSteps(stepsViewModel: StepsViewModel) {
         SortingStep(
             step = "Array is sorted Successfully",
             arrayState = arrayState,
-            modifiedArrSize = -1
+            modifiedArrSize = -1,
+            noOfComparisons = noOfComparisons,
+            noOfSwaps = noOfSwaps
         )
     )
 
@@ -467,6 +508,8 @@ fun generateInsertionSortSteps(stepsViewModel: StepsViewModel) {
     }
     val size = numbers.size - 1
     var arrayState = "01234567"
+    var noOfComparisons = 0
+    var noOfSwaps = 0
 
     val greaterOrLesser = if (stepsViewModel.sortOrder == "Ascending") "greater" else "less"
 
@@ -477,6 +520,7 @@ fun generateInsertionSortSteps(stepsViewModel: StepsViewModel) {
         val t = arrayState[i]
 
         for (j in i - 1 downTo 0) {
+            noOfComparisons++
             if (checkGreaterOrLesser(
                     numbers[j],
                     num,
@@ -485,22 +529,28 @@ fun generateInsertionSortSteps(stepsViewModel: StepsViewModel) {
             ) {
                 arrayState =
                     arrayState.substring(0, j + 1) + arrayState[j] + arrayState.substring(j + 2)
+                noOfSwaps++
                 stepsViewModel.addSteps(
                     SortingStep(
                         step = "${numbers[j]} is $greaterOrLesser than $num\nShifting ${numbers[j]} to the right\nFinding position for $num",
                         arrayState = arrayState,
-                        currentComparisons = arrayListOf(j, j + 1)
+                        currentComparisons = arrayListOf(j, j + 1),
+                        noOfComparisons = noOfComparisons,
+                        noOfSwaps = noOfSwaps
                     )
                 )
                 numbers[j + 1] = numbers[j]
                 hasMoved = true
             } else {
                 arrayState = arrayState.substring(0, j + 1) + t + arrayState.substring(j + 2)
+                noOfSwaps++
                 stepsViewModel.addSteps(
                     SortingStep(
                         step = "Inserting $num at index ${j + 1}",
                         arrayState = arrayState,
-                        currentComparisons = arrayListOf(j + 1)
+                        currentComparisons = arrayListOf(j + 1),
+                        noOfComparisons = noOfComparisons,
+                        noOfSwaps = noOfSwaps
                     )
                 )
                 numbers[j + 1] = num
@@ -511,12 +561,15 @@ fun generateInsertionSortSteps(stepsViewModel: StepsViewModel) {
 
         if (hasMoved && notPlaced) {
             numbers[0] = num
+            noOfSwaps++
             arrayState = t + arrayState.substring(1)
             stepsViewModel.addSteps(
                 SortingStep(
                     step = "Inserting $num at index 0",
                     arrayState = arrayState,
-                    currentComparisons = arrayListOf(0)
+                    currentComparisons = arrayListOf(0),
+                    noOfComparisons = noOfComparisons,
+                    noOfSwaps = noOfSwaps
                 )
             )
         }
@@ -526,7 +579,9 @@ fun generateInsertionSortSteps(stepsViewModel: StepsViewModel) {
     stepsViewModel.addSteps(
         SortingStep(
             step = "Array is sorted Successfully",
-            arrayState = arrayState
+            arrayState = arrayState,
+            noOfComparisons = noOfComparisons,
+            noOfSwaps = noOfSwaps
         )
     )
 

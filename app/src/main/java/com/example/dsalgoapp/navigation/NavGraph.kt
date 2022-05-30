@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.dsalgoapp.ui.screens.algo_detail.AlgoDetailScreen
 import com.example.dsalgoapp.ui.screens.ds_detail.DsDetailScreen
+import com.example.dsalgoapp.ui.screens.ds_visualise.DsVisualiseScreen
 import com.example.dsalgoapp.ui.screens.home.HomeScreen
 import com.example.dsalgoapp.ui.screens.real_time.RealTimeScreen
 import com.example.dsalgoapp.ui.screens.splash.SplashScreen
@@ -82,6 +83,17 @@ fun SetUpNavGraph(navController: NavHostController) {
             )
         ) {
             RealTimeScreen(navController = navController)
+        }
+
+        composable(
+            route = Screen.DsVisualise.route,
+            arguments = listOf(
+                navArgument(Constants.DS_ID){
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            DsVisualiseScreen(navController = navController)
         }
 
     }

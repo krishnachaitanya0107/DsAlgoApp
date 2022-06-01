@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Paparao/StudioProjects/DSAlgoApp/app/src/main/res/drawable-night/ic_arrow_right.xml" value="0.188" />
         <entry key="..\:/Users/Paparao/StudioProjects/DSAlgoApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1845" />
+        <entry key="..\:/Users/Paparao/StudioProjects/DSAlgoApp/app/src/main/res/drawable/ic_arrow_down.xml" value="0.1845" />
+        <entry key="..\:/Users/Paparao/StudioProjects/DSAlgoApp/app/src/main/res/drawable/ic_arrow_right.xml" value="0.188" />
         <entry key="..\:/Users/Paparao/StudioProjects/DSAlgoApp/app/src/main/res/drawable/ic_search.xml" value="0.1845" />
       </map>
     </option>

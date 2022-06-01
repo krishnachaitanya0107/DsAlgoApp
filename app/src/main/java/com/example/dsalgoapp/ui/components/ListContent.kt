@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ContentAlpha
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -13,6 +14,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import com.example.dsalgoapp.data.DsAlgoSubItem
+import com.example.dsalgoapp.ui.theme.titleColor
+import com.example.dsalgoapp.ui.theme.topAppBarBackgroundColor
 
 @Composable
 fun ListContent(
@@ -25,7 +28,7 @@ fun ListContent(
         Surface(
             modifier = Modifier
                 .fillMaxSize(),
-            color = Color.Black.copy(alpha = ContentAlpha.medium),
+            color = MaterialTheme.colors.topAppBarBackgroundColor,
             shape = RoundedCornerShape(size = Dp(10f))
         ) {
             Column(
@@ -37,7 +40,7 @@ fun ListContent(
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     text = item.name,
-                    color = Color.White,
+                    color = MaterialTheme.colors.titleColor,
                     textAlign = TextAlign.Center
                 )
                 Image(

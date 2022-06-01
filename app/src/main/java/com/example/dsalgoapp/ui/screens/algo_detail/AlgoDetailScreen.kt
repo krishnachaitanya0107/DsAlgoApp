@@ -26,8 +26,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.dsalgoapp.navigation.Screen
-import com.example.dsalgoapp.ui.theme.Gray
-import com.example.dsalgoapp.ui.theme.Purple200
+import com.example.dsalgoapp.ui.theme.*
 import kotlin.random.Random
 
 @Composable
@@ -87,7 +86,7 @@ fun AlgoDetailScreen(
                         Button(
                             onClick = { algoDetailsViewModel.openManualInputDialog.value = true },
                             colors = ButtonDefaults.buttonColors(
-                                backgroundColor = MaterialTheme.colors.primary,
+                                backgroundColor = MaterialTheme.colors.buttonBackgroundColor,
                                 contentColor = Color.White
                             )
                         ) {
@@ -98,7 +97,7 @@ fun AlgoDetailScreen(
                                 generateRandomInput(algoDetailsViewModel = algoDetailsViewModel)
                             },
                             colors = ButtonDefaults.buttonColors(
-                                backgroundColor = MaterialTheme.colors.primary,
+                                backgroundColor = MaterialTheme.colors.buttonBackgroundColor,
                                 contentColor = Color.White
                             )
                         ) {
@@ -141,7 +140,7 @@ fun AlgoDetailScreen(
                             )
                         },
                         colors = ButtonDefaults.buttonColors(
-                            backgroundColor = MaterialTheme.colors.primary,
+                            backgroundColor = MaterialTheme.colors.buttonBackgroundColor,
                             contentColor = Color.White
                         ),
                         modifier = Modifier.fillMaxWidth()
@@ -186,7 +185,7 @@ fun AlgoDetailScreen(
                         Button(
                             onClick = { algoDetailsViewModel.openManualInputDialog.value = true },
                             colors = ButtonDefaults.buttonColors(
-                                backgroundColor = MaterialTheme.colors.primary,
+                                backgroundColor = MaterialTheme.colors.buttonBackgroundColor,
                                 contentColor = Color.White
                             )
                         ) {
@@ -197,7 +196,7 @@ fun AlgoDetailScreen(
                                 generateRandomInput(algoDetailsViewModel = algoDetailsViewModel)
                             },
                             colors = ButtonDefaults.buttonColors(
-                                backgroundColor = MaterialTheme.colors.primary,
+                                backgroundColor = MaterialTheme.colors.buttonBackgroundColor,
                                 contentColor = Color.White
                             )
                         ) {
@@ -222,7 +221,7 @@ fun AlgoDetailScreen(
                             )
                         },
                         colors = ButtonDefaults.buttonColors(
-                            backgroundColor = MaterialTheme.colors.primary,
+                            backgroundColor = MaterialTheme.colors.buttonBackgroundColor,
                             contentColor = Color.White
                         ),
                         modifier = Modifier.fillMaxWidth()
@@ -260,7 +259,7 @@ fun AlgoDetailScreen(
                     Button(
                         onClick = { algoDetailsViewModel.openManualInputDialog.value = false },
                         colors = ButtonDefaults.buttonColors(
-                            backgroundColor = MaterialTheme.colors.primary,
+                            backgroundColor = MaterialTheme.colors.buttonBackgroundColor,
                             contentColor = Color.White
                         )
                     ) {
@@ -286,7 +285,7 @@ fun AlgoListItem(
     Surface(
         modifier = Modifier
             .fillMaxWidth(),
-        color = Color.Black.copy(alpha = ContentAlpha.medium),
+        color = MaterialTheme.colors.topAppBarBackgroundColor,
         shape = RoundedCornerShape(size = Dp(10f))
     ) {
         Column(
@@ -313,7 +312,7 @@ fun AlgoListItem(
 
                 Button(
                     onClick = { /*to do*/ }, colors = ButtonDefaults.buttonColors(
-                        backgroundColor = MaterialTheme.colors.primary,
+                        backgroundColor = MaterialTheme.colors.buttonBackgroundColor,
                         contentColor = Color.White
                     )
                 ) {
@@ -331,7 +330,7 @@ fun AlgoListItem(
                         }
                     },
                     colors = ButtonDefaults.buttonColors(
-                        backgroundColor = MaterialTheme.colors.primary,
+                        backgroundColor = MaterialTheme.colors.buttonBackgroundColor,
                         contentColor = Color.White
                     )
                 ) {

@@ -17,7 +17,7 @@ class DsVisualiseViewModel @Inject constructor(
 
     var stack by mutableStateOf(listOf<Int>())
     var queue by mutableStateOf(listOf<Int>())
-    var linkedList = LinkedList<Int>()
+    var linkedList by mutableStateOf(listOf<Int>())
 
     var message by mutableStateOf("")
 
@@ -36,8 +36,16 @@ class DsVisualiseViewModel @Inject constructor(
         return last
     }
 
-    fun addInQueue(element: Int){
-        if(front==-1){
+    fun insertInLinkedList(element: Int, position: Int) {
+        linkedList = linkedList.subList(0, position) + listOf(element) + linkedList.subList(position, linkedList.size)
+    }
+
+    fun deleteInLinkedList(position: Int) {
+        linkedList = linkedList.subList(0, position) + linkedList.subList(position + 1, linkedList.size)
+    }
+
+    fun addInQueue(element: Int) {
+        if (front == -1) {
             front++
         }
         queue = queue + listOf(element)
@@ -48,7 +56,7 @@ class DsVisualiseViewModel @Inject constructor(
         rear--
         val first = queue.first()
         queue = queue.drop(1)
-        if(queue.isEmpty()){
+        if (queue.isEmpty()) {
             front--
         }
         return first

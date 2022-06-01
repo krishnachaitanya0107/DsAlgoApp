@@ -4,7 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ContentAlpha
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -15,9 +15,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.dsalgoapp.data.SortingStep
-import com.example.dsalgoapp.ui.theme.Gray
-import com.example.dsalgoapp.ui.theme.Green
-import com.example.dsalgoapp.ui.theme.Red
+import com.example.dsalgoapp.ui.theme.*
 
 @Composable
 fun StepsScreen(
@@ -55,7 +53,7 @@ fun TitleContent(stepsViewModel: StepsViewModel) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(Dp(10f)),
-        color = Color.Black.copy(alpha = ContentAlpha.medium),
+        color = MaterialTheme.colors.topAppBarBackgroundColor,
         shape = RoundedCornerShape(size = Dp(10f))
     ) {
         Column(
@@ -65,21 +63,21 @@ fun TitleContent(stepsViewModel: StepsViewModel) {
             verticalArrangement = Arrangement.spacedBy(Dp(10f))
         ) {
 
-            Text("Input Array :")
+            Text("Input Array :", color = MaterialTheme.colors.titleColor)
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 stepsViewModel.inputArray.forEachIndexed { index, num ->
-                    Text(text = num.toString())
+                    Text(text = num.toString(), color = MaterialTheme.colors.titleColor)
                     Spacer(modifier = Modifier.width(Dp(10f)))
                 }
             }
 
-            Text(text = title)
+            Text(text = title, color = MaterialTheme.colors.titleColor)
 
-            Text(text = subtitle)
+            Text(text = subtitle, color = MaterialTheme.colors.titleColor)
         }
     }
 
@@ -97,7 +95,7 @@ fun StepsContent(stepsViewModel: StepsViewModel) {
             items(count = stepsViewModel.steps.size) { item ->
 
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().background(MaterialTheme.colors.topAppBarBackgroundColor),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Column(
@@ -119,12 +117,18 @@ fun StepsContent(stepsViewModel: StepsViewModel) {
                                             shape = RoundedCornerShape(size = Dp(1f))
                                         )
                                 ) {
-                                    Text(text = num.toString(), modifier = Modifier.padding(Dp(3f)))
+                                    Text(
+                                        text = num.toString(),
+                                        modifier = Modifier.padding(Dp(3f)),
+                                        color = MaterialTheme.colors.titleColor)
                                 }
                                 Spacer(modifier = Modifier.width(Dp(10f)))
                             }
                         }
-                        Text(text = stepsViewModel.steps[item])
+                        Text(
+                            text = stepsViewModel.steps[item],
+                            color = MaterialTheme.colors.titleColor
+                        )
                     }
                 }
                 Spacer(modifier = Modifier.height(Dp(10f)))
@@ -140,7 +144,7 @@ fun StepsContent(stepsViewModel: StepsViewModel) {
             items(count = stepsViewModel.sortSteps.size) { item ->
 
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().background(MaterialTheme.colors.topAppBarBackgroundColor),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Column(
@@ -168,19 +172,29 @@ fun StepsContent(stepsViewModel: StepsViewModel) {
                                 ) {
                                     Text(
                                         text = stepsViewModel.inputArray[num.digitToInt()].toString(),
-                                        modifier = Modifier.padding(Dp(3f))
+                                        modifier = Modifier.padding(Dp(3f)),
+                                        color = MaterialTheme.colors.titleColor
                                     )
                                 }
                                 Spacer(modifier = Modifier.width(Dp(10f)))
                             }
                         }
-                        Text(text = stepsViewModel.sortSteps[item].step)
+                        Text(
+                            text = stepsViewModel.sortSteps[item].step,
+                            color = MaterialTheme.colors.titleColor
+                        )
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Text(text = "No of Comparisons : "+stepsViewModel.sortSteps[item].noOfComparisons)
-                            Text(text = "No of Swaps : "+stepsViewModel.sortSteps[item].noOfSwaps)
+                            Text(
+                                text = "No of Comparisons : "+stepsViewModel.sortSteps[item].noOfComparisons,
+                                color = MaterialTheme.colors.titleColor
+                            )
+                            Text(
+                                text = "No of Swaps : "+stepsViewModel.sortSteps[item].noOfSwaps,
+                                color = MaterialTheme.colors.titleColor
+                            )
                         }
                     }
                 }
@@ -191,14 +205,14 @@ fun StepsContent(stepsViewModel: StepsViewModel) {
     }
 }
 
-
+@Composable
 fun getColorState(step: Int, index: Int, stepsViewModel: StepsViewModel): Color {
     if (stepsViewModel.stepsType.contains("linear")) {
         if (stepsViewModel.numberFound.value && stepsViewModel.steps.size == step + 1) {
             return if (index < stepsViewModel.steps.size - 1) {
                 Gray
             } else if (index == stepsViewModel.steps.size - 1) {
-                Green
+                MaterialTheme.colors.green
             } else {
                 Color.Transparent
             }
@@ -221,7 +235,7 @@ fun getColorState(step: Int, index: Int, stepsViewModel: StepsViewModel): Color 
         val curState = stepsViewModel.binarySearchStates[step]
         if (stepsViewModel.numberFound.value) {
             if (step == stepsViewModel.binarySearchStates.size - 1 && index == curState[1]) {
-                return Green
+                return MaterialTheme.colors.green
             }
         }
         return if (index == curState[1]) {
@@ -239,7 +253,7 @@ fun getColorState(step: Int, index: Int, stepsViewModel: StepsViewModel): Color 
         return if (curPosition.contains(index))
             Gray
         else if (index > arrSize)
-            Green
+            MaterialTheme.colors.green
         else
             Color.Transparent
     } else if (stepsViewModel.stepsType.contains("insertion")) {
@@ -248,7 +262,7 @@ fun getColorState(step: Int, index: Int, stepsViewModel: StepsViewModel): Color 
         return if (curPosition.contains(index))
             Gray
         else if (step == stepsViewModel.sortSteps.size - 1)
-            Green
+            MaterialTheme.colors.green
         else
             Color.Transparent
     } else if (stepsViewModel.stepsType.contains("quick")) {

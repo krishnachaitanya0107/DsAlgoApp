@@ -4,17 +4,18 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ContentAlpha
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.dsalgoapp.navigation.Screen
+import com.example.dsalgoapp.ui.theme.titleColor
+import com.example.dsalgoapp.ui.theme.topAppBarBackgroundColor
 
 @Composable
 fun DsDetailScreen(
@@ -33,7 +34,7 @@ fun DsDetailScreen(
                 Surface(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    color = Color.Black.copy(alpha = ContentAlpha.medium),
+                    color = MaterialTheme.colors.topAppBarBackgroundColor,
                     shape = RoundedCornerShape(size = Dp(10f))
                 ) {
                     Column(
@@ -48,11 +49,13 @@ fun DsDetailScreen(
 
                         Text(
                             text = item.name,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
+                            color = MaterialTheme.colors.titleColor
                         )
                         Text(
                             text = item.description ?: "",
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
+                            color = MaterialTheme.colors.titleColor
                         )
                     }
                 }

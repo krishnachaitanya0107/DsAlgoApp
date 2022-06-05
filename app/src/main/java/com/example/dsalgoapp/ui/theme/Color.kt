@@ -13,6 +13,9 @@ val Green = Color(0xFF115E14)
 val LightGreen = Color(0xFF6CB359)
 val Red = Color(0xFFF44336)
 
+//val lightBlue = Color(0xFF10ACF3)
+//val darkBlue = Color(0xFF3F51B5)
+
 val LightGray = Color(0xFFD8D8D8)
 val DarkGray = Color(0xFF2A2A2A)
 
@@ -36,4 +39,7 @@ val Colors.topAppBarBackgroundColor: Color
     get() = if (isLight) Purple200 else Color.Black
 
 val Colors.green: Color
-    get() = if(isLight) LightGreen else Green
+    get() = if (isLight) LightGreen else Green
+
+//val Colors.blue: Color
+//    get() = if (isLight) darkBlue else lightBlue

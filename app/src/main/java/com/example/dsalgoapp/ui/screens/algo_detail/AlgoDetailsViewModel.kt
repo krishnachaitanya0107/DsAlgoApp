@@ -35,6 +35,8 @@ class AlgoDetailsViewModel @Inject constructor(
 
     var sortOrder = mutableStateOf("Ascending")
 
+    var selectedOption = mutableStateOf("")
+
     fun updateInputArray(index: Int, newNum: Int) {
         inputArray = inputArray.toMutableList().also { it[index] = newNum }
     }

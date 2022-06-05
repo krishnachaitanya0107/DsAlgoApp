@@ -129,15 +129,26 @@ fun AlgoDetailScreen(
 
                     Button(
                         onClick = {
-                            algoDetailsViewModel.openSearchInputDialog.value=false
-                            navController.navigate(
-                                Screen.Steps.passStepsDetails(
-                                    stepsType = algoDetailsViewModel.selectedItemId.value,
-                                    inputArray = algoDetailsViewModel.inputArray,
-                                    sortOrder = algoDetailsViewModel.sortOrder.value,
-                                    numToSearch = algoDetailsViewModel.numberToSearch.value.ifEmpty { "0" }
+                            algoDetailsViewModel.openSearchInputDialog.value = false
+                            if(algoDetailsViewModel.selectedOption.value.contains("StepWise")){
+                                navController.navigate(
+                                    Screen.Steps.passStepsDetails(
+                                        stepsType = algoDetailsViewModel.selectedItemId.value,
+                                        inputArray = algoDetailsViewModel.inputArray,
+                                        sortOrder = algoDetailsViewModel.sortOrder.value,
+                                        numToSearch = algoDetailsViewModel.numberToSearch.value.ifEmpty { "0" }
+                                    )
                                 )
-                            )
+                            } else if(algoDetailsViewModel.selectedOption.value.contains("RealTime")){
+                                navController.navigate(
+                                    Screen.RealTime.passDetails(
+                                        stepsType = algoDetailsViewModel.selectedItemId.value,
+                                        inputArray = algoDetailsViewModel.inputArray,
+                                        sortOrder = algoDetailsViewModel.sortOrder.value,
+                                        numToSearch = algoDetailsViewModel.numberToSearch.value.ifEmpty { "0" }
+                                    )
+                                )
+                            }
                         },
                         colors = ButtonDefaults.buttonColors(
                             backgroundColor = MaterialTheme.colors.buttonBackgroundColor,
@@ -153,7 +164,7 @@ fun AlgoDetailScreen(
         }
     }
 
-    if(algoDetailsViewModel.openSortInputDialog.value){
+    if (algoDetailsViewModel.openSortInputDialog.value) {
 
         Dialog(onDismissRequest = { algoDetailsViewModel.openSortInputDialog.value = false }) {
             Card(elevation = Dp(12f), shape = RoundedCornerShape(Dp(12f))) {
@@ -210,15 +221,26 @@ fun AlgoDetailScreen(
 
                     Button(
                         onClick = {
-                            algoDetailsViewModel.openSortInputDialog.value=false
-                            navController.navigate(
-                                Screen.Steps.passStepsDetails(
-                                    stepsType = algoDetailsViewModel.selectedItemId.value,
-                                    inputArray = algoDetailsViewModel.inputArray,
-                                    sortOrder = algoDetailsViewModel.sortOrder.value,
-                                    numToSearch = "0"
+                            algoDetailsViewModel.openSortInputDialog.value = false
+                            if(algoDetailsViewModel.selectedOption.value.contains("StepWise")){
+                                navController.navigate(
+                                    Screen.Steps.passStepsDetails(
+                                        stepsType = algoDetailsViewModel.selectedItemId.value,
+                                        inputArray = algoDetailsViewModel.inputArray,
+                                        sortOrder = algoDetailsViewModel.sortOrder.value,
+                                        numToSearch = "0"
+                                    )
                                 )
-                            )
+                            } else if(algoDetailsViewModel.selectedOption.value.contains("RealTime")){
+                                navController.navigate(
+                                    Screen.RealTime.passDetails(
+                                        stepsType = algoDetailsViewModel.selectedItemId.value,
+                                        inputArray = algoDetailsViewModel.inputArray,
+                                        sortOrder = algoDetailsViewModel.sortOrder.value,
+                                        numToSearch = "0"
+                                    )
+                                )
+                            }
                         },
                         colors = ButtonDefaults.buttonColors(
                             backgroundColor = MaterialTheme.colors.buttonBackgroundColor,
@@ -249,7 +271,7 @@ fun AlgoDetailScreen(
 
                     Text(text = "Make sure the inputs are between 0 & 99")
 
-                    for(i in 0 until 8){
+                    for (i in 0 until 8) {
                         OutLineTextField(
                             algoDetailsViewModel = algoDetailsViewModel,
                             index = i
@@ -308,10 +330,19 @@ fun AlgoListItem(
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
-            ){
+            ) {
 
                 Button(
-                    onClick = { /*to do*/ }, colors = ButtonDefaults.buttonColors(
+                    onClick = {
+                        algoDetailsViewModel.selectedOption.value = "RealTime"
+                        if (item.id.contains("Search")) {
+                            algoDetailsViewModel.openSearchInputDialog.value = true
+                            algoDetailsViewModel.selectedItemId.value = item.id
+                        } else if (item.id.contains("Sort")) {
+                            algoDetailsViewModel.openSortInputDialog.value = true
+                            algoDetailsViewModel.selectedItemId.value = item.id
+                        }
+                    }, colors = ButtonDefaults.buttonColors(
                         backgroundColor = MaterialTheme.colors.buttonBackgroundColor,
                         contentColor = Color.White
                     )
@@ -321,6 +352,7 @@ fun AlgoListItem(
 
                 Button(
                     onClick = {
+                        algoDetailsViewModel.selectedOption.value = "StepWise"
                         if (item.id.contains("Search")) {
                             algoDetailsViewModel.openSearchInputDialog.value = true
                             algoDetailsViewModel.selectedItemId.value = item.id

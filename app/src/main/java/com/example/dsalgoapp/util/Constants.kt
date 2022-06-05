@@ -51,11 +51,11 @@ object Constants {
                             id = "insertionSort",
                             description = "Insertion sort is a simple sorting algorithm that works similar to the way you sort playing cards in your hands. The array is virtually split into a sorted and an unsorted part. Values from the unsorted part are picked and placed at the correct position in the sorted part."
                         )
-                        , DsAlgoDetailsItem(
+                        /*, DsAlgoDetailsItem(
                             name = "Merge Sort",
                             id = "mergeSort",
                             description = "Merge Sort is a Divide and Conquer algorithm. It divides the input array into two halves, calls itself for the two halves, and then it merges the two sorted halves."
-                        )
+                        )*/
                     ),
                     id = "Sort"
                 )
@@ -81,7 +81,7 @@ object Constants {
                     id = "LinkedList",
                     description = "A linked list is a sequence of data structures, which are connected together via links.Linked List is a sequence of links which contains items. Each link contains a connection to another link. Linked list is the second most-used data structure after array." +
                             "Linked list can be visualized as a chain of nodes, where every node points to the next node."
-                ), DsAlgoSubItem(
+                )/*, DsAlgoSubItem(
                     name = "Tree",
                     image = R.drawable.tree,
                     id = "Tree",
@@ -93,7 +93,7 @@ object Constants {
                     id = "Graph",
                     description = "A graph is a pictorial representation of a set of objects where some pairs of objects are connected by links. The interconnected objects are represented by points termed as vertices, and the links that connect the vertices are called edges.Mathematical graphs can be represented in data structure." +
                             " We can represent a graph using an array of vertices and a two-dimensional array of edges."
-                )
+                )*/
             )
         )
     )

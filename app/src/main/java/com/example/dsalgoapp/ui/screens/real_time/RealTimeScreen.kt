@@ -1,14 +1,13 @@
 package com.example.dsalgoapp.ui.screens.real_time
 
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -34,6 +33,7 @@ fun RealTimeScreen(
             verticalArrangement = Arrangement.Center
         ) {
             RealTimeContent(realTimeViewModel = realTimeViewModel)
+            CustomRadioGroup(realTimeViewModel = realTimeViewModel)
         }
     }
 }
@@ -77,8 +77,9 @@ fun RealTimeContent(realTimeViewModel: RealTimeViewModel) {
                     }
                 }
                 Text(
-                    text = realTimeViewModel.currStep,
-                    color = MaterialTheme.colors.titleColor
+                    text = realTimeViewModel.currStep.addEmptyLines(4),
+                    color = MaterialTheme.colors.titleColor,
+                    maxLines = 5
                 )
 
                 Row(
@@ -89,22 +90,37 @@ fun RealTimeContent(realTimeViewModel: RealTimeViewModel) {
                     Button(
                         onClick = {
                             generateSteps(realTimeViewModel = realTimeViewModel)
-                        }, colors = ButtonDefaults.buttonColors(
-                            backgroundColor = MaterialTheme.colors.buttonBackgroundColor,
-                            contentColor = Color.White
-                        )
+                        },
+                        colors = if (!realTimeViewModel.isVisualizationRunning) {
+                            ButtonDefaults.buttonColors(
+                                backgroundColor = MaterialTheme.colors.buttonBackgroundColor,
+                                contentColor = Color.White
+                            )
+                        } else
+                            ButtonDefaults.buttonColors(
+                                backgroundColor = Gray,
+                                contentColor = Color.White
+                            )
                     ) {
                         Text(text = "Start")
                     }
 
                     Button(
                         onClick = {
-
+                            if (!realTimeViewModel.isVisualizationRunning) {
+                                reset(realTimeViewModel = realTimeViewModel)
+                            }
                         },
-                        colors = ButtonDefaults.buttonColors(
-                            backgroundColor = MaterialTheme.colors.buttonBackgroundColor,
-                            contentColor = Color.White
-                        )
+                        colors = if (!realTimeViewModel.isVisualizationRunning) {
+                            ButtonDefaults.buttonColors(
+                                backgroundColor = MaterialTheme.colors.buttonBackgroundColor,
+                                contentColor = Color.White
+                            )
+                        } else
+                            ButtonDefaults.buttonColors(
+                                backgroundColor = Gray,
+                                contentColor = Color.White
+                            )
                     ) {
                         Text(text = "Reset")
                     }
@@ -147,8 +163,9 @@ fun RealTimeContent(realTimeViewModel: RealTimeViewModel) {
                     }
                 }
                 Text(
-                    text = realTimeViewModel.sortStep.step,
-                    color = MaterialTheme.colors.titleColor
+                    text = realTimeViewModel.sortStep.step.addEmptyLines(4),
+                    color = MaterialTheme.colors.titleColor,
+                    maxLines = 5
                 )
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -171,23 +188,41 @@ fun RealTimeContent(realTimeViewModel: RealTimeViewModel) {
 
                     Button(
                         onClick = {
-                            generateSteps(realTimeViewModel = realTimeViewModel)
-                        }, colors = ButtonDefaults.buttonColors(
-                            backgroundColor = MaterialTheme.colors.buttonBackgroundColor,
-                            contentColor = Color.White
-                        )
+                            if (!realTimeViewModel.isVisualizationRunning) {
+                                realTimeViewModel.isVisualizationRunning = true
+                                generateSteps(realTimeViewModel = realTimeViewModel)
+                            }
+                        },
+                        colors = if (!realTimeViewModel.isVisualizationRunning) {
+                            ButtonDefaults.buttonColors(
+                                backgroundColor = MaterialTheme.colors.buttonBackgroundColor,
+                                contentColor = Color.White
+                            )
+                        } else
+                            ButtonDefaults.buttonColors(
+                                backgroundColor = Gray,
+                                contentColor = Color.White
+                            )
                     ) {
                         Text(text = "Start")
                     }
 
                     Button(
                         onClick = {
-
+                            if (!realTimeViewModel.isVisualizationRunning) {
+                                reset(realTimeViewModel = realTimeViewModel)
+                            }
                         },
-                        colors = ButtonDefaults.buttonColors(
-                            backgroundColor = MaterialTheme.colors.buttonBackgroundColor,
-                            contentColor = Color.White
-                        )
+                        colors = if (!realTimeViewModel.isVisualizationRunning) {
+                            ButtonDefaults.buttonColors(
+                                backgroundColor = MaterialTheme.colors.buttonBackgroundColor,
+                                contentColor = Color.White
+                            )
+                        } else
+                            ButtonDefaults.buttonColors(
+                                backgroundColor = Gray,
+                                contentColor = Color.White
+                            )
                     ) {
                         Text(text = "Reset")
                     }
@@ -197,6 +232,52 @@ fun RealTimeContent(realTimeViewModel: RealTimeViewModel) {
 
         Spacer(modifier = Modifier.height(Dp(10f)))
     }
+}
+
+
+@Composable
+fun CustomRadioGroup(realTimeViewModel: RealTimeViewModel) {
+
+    val speeds = HashMap<String, Long>()
+
+    speeds["Slow"] = 1500L
+    speeds["Medium"] = 1200L
+    speeds["Fast"] = 800L
+
+    val onSelectionChange = { speed: Long ->
+        realTimeViewModel.visualizationSpeed = speed
+    }
+
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        speeds.forEach { speed ->
+            Text(text = speed.key, modifier = Modifier
+                .clip(
+                    shape = RoundedCornerShape(
+                        size = Dp(10f),
+                    ),
+                )
+                .clickable {
+                    onSelectionChange(speed.value)
+                }
+                .background(
+                    if (speed.value == realTimeViewModel.visualizationSpeed) {
+                        Purple200
+                    } else {
+                        Gray
+                    }
+                )
+                .padding(
+                    vertical = Dp(10f),
+                    horizontal = Dp(10f),
+                )
+            )
+
+        }
+    }
+
 }
 
 @Composable
@@ -262,6 +343,8 @@ fun getColorState(index: Int, realTimeViewModel: RealTimeViewModel): Color {
     return Color.Transparent
 }
 
+fun String.addEmptyLines(lines: Int) = this + "\n".repeat(lines)
+
 fun generateSteps(realTimeViewModel: RealTimeViewModel) {
     if (realTimeViewModel.stepsType.contains("linear")) {
         visualizeLinearSearch(realTimeViewModel = realTimeViewModel)
@@ -279,6 +362,18 @@ fun generateSteps(realTimeViewModel: RealTimeViewModel) {
 
 }
 
+fun reset(realTimeViewModel: RealTimeViewModel) {
+    if (realTimeViewModel.stepsType.contains("Search")) {
+        realTimeViewModel.currStep = ""
+        realTimeViewModel.linearSearchState = 0
+        realTimeViewModel.numberFoundIndex = -1
+        realTimeViewModel.binarySearchStates = listOf(-1, 8, 8)
+    } else if (realTimeViewModel.stepsType.contains("Sort")) {
+        realTimeViewModel.sortStep =
+            SortingStep(step = "", arrayState = "01234567", modifiedArrSize = 8)
+    }
+}
+
 fun visualizeLinearSearch(realTimeViewModel: RealTimeViewModel) {
     val arr = realTimeViewModel.inputArray
     val searchFor = realTimeViewModel.userInputNumberToSearch.toInt()
@@ -287,13 +382,13 @@ fun visualizeLinearSearch(realTimeViewModel: RealTimeViewModel) {
 
         for (i in arr.indices) {
             if (searchFor == arr[i]) {
-                delay((800).toLong())
+                delay(realTimeViewModel.visualizationSpeed)
                 realTimeViewModel.currStep = "Element $searchFor found at index $i"
                 realTimeViewModel.linearSearchState = i
                 realTimeViewModel.numberFoundIndex = i
                 break
             } else {
-                delay((800).toLong())
+                delay(realTimeViewModel.visualizationSpeed)
                 realTimeViewModel.currStep =
                     "Comparing element at index $i \n${arr[i]} with $searchFor"
                 realTimeViewModel.linearSearchState = i
@@ -304,6 +399,7 @@ fun visualizeLinearSearch(realTimeViewModel: RealTimeViewModel) {
             realTimeViewModel.linearSearchState = arr.size
             realTimeViewModel.currStep = "Element $searchFor is not present in the array"
         }
+        realTimeViewModel.isVisualizationRunning = false
     }
 
 }
@@ -323,20 +419,20 @@ fun visualizeBinarySearch(realTimeViewModel: RealTimeViewModel) {
     CoroutineScope(Dispatchers.IO).launch {
         while (start <= end) {
             if (arr[mid] == searchFor) {
-                delay((800).toLong())
+                delay(realTimeViewModel.visualizationSpeed)
                 realTimeViewModel.currStep = "Element $searchFor found at index $mid"
                 realTimeViewModel.addBinarySearchStates(listOf(start, mid, end))
                 realTimeViewModel.numberFoundIndex = mid
                 break
             } else {
                 if (arr[mid] < searchFor) {
-                    delay((800).toLong())
+                    delay(realTimeViewModel.visualizationSpeed)
                     start = mid + 1
                     realTimeViewModel.currStep =
                         "Element $searchFor is greater than the mid element ${arr[mid]} \nUpdating start = $start \nUpdating mid = ${(start + end) / 2} \nend = $end"
                     realTimeViewModel.addBinarySearchStates(listOf(start, mid, end))
                 } else if (arr[mid] > searchFor) {
-                    delay((800).toLong())
+                    delay(realTimeViewModel.visualizationSpeed)
                     end = mid - 1
                     realTimeViewModel.currStep =
                         "Element $searchFor is lesser than the mid element ${arr[mid]} \nUpdating end = $end \nUpdating mid = ${(end + start) / 2} \nstart = $start"
@@ -350,6 +446,7 @@ fun visualizeBinarySearch(realTimeViewModel: RealTimeViewModel) {
             realTimeViewModel.addBinarySearchStates(listOf(8, 8, 8))
             realTimeViewModel.currStep = "Element $searchFor is not present in the array"
         }
+        realTimeViewModel.isVisualizationRunning = false
     }
 }
 
@@ -377,7 +474,7 @@ fun visualizeBubbleSort(realTimeViewModel: RealTimeViewModel) {
                     )
                 ) {
 
-                    delay((800).toLong())
+                    delay(realTimeViewModel.visualizationSpeed)
                     realTimeViewModel.sortStep = SortingStep(
                         step = "${numbers[currentPosition]} is $greaterOrLesser than ${numbers[currentPosition + 1]}",
                         arrayState = arrayState,
@@ -395,7 +492,7 @@ fun visualizeBubbleSort(realTimeViewModel: RealTimeViewModel) {
                         arrayState.substring(0, currentPosition) + arrayState[currentPosition + 1] +
                                 arrayState[currentPosition] + arrayState.substring(currentPosition + 2)
 
-                    delay((800).toLong())
+                    delay(realTimeViewModel.visualizationSpeed)
                     realTimeViewModel.sortStep = SortingStep(
                         step = "Swapping ${numbers[currentPosition + 1]} with ${numbers[currentPosition]}",
                         arrayState = arrayState,
@@ -406,7 +503,7 @@ fun visualizeBubbleSort(realTimeViewModel: RealTimeViewModel) {
                     )
                 } else {
 
-                    delay((800).toLong())
+                    delay(realTimeViewModel.visualizationSpeed)
                     realTimeViewModel.sortStep = SortingStep(
                         step = "${numbers[currentPosition]} is not $greaterOrLesser than ${numbers[currentPosition + 1]}\nNo Swapping done",
                         arrayState = arrayState,
@@ -426,6 +523,7 @@ fun visualizeBubbleSort(realTimeViewModel: RealTimeViewModel) {
             noOfComparisons = noOfComparisons,
             noOfSwaps = noOfSwaps
         )
+        realTimeViewModel.isVisualizationRunning = false
     }
 
 }
@@ -457,7 +555,7 @@ fun visualizeSelectionSort(realTimeViewModel: RealTimeViewModel) {
                     )
                 ) {
 
-                    delay((800).toLong())
+                    delay(realTimeViewModel.visualizationSpeed)
                     realTimeViewModel.sortStep = SortingStep(
                         step = "${numbers[j]} is $greaterOrLesser than ${numbers[num]}\nSetting new $maxOrMin index to $j",
                         arrayState = arrayState,
@@ -469,7 +567,7 @@ fun visualizeSelectionSort(realTimeViewModel: RealTimeViewModel) {
 
                     num = j
                 } else {
-                    delay((800).toLong())
+                    delay(realTimeViewModel.visualizationSpeed)
                     realTimeViewModel.sortStep = SortingStep(
                         step = "${numbers[j]} is not $greaterOrLesser than ${numbers[num]}",
                         arrayState = arrayState,
@@ -493,7 +591,7 @@ fun visualizeSelectionSort(realTimeViewModel: RealTimeViewModel) {
                     ) +
                             arrayState[num] + arrayState.substring(i + 1)
 
-                delay((800).toLong())
+                delay(realTimeViewModel.visualizationSpeed)
                 realTimeViewModel.sortStep = SortingStep(
                     step = "Swapping ${numbers[num]} with ${numbers[i]}",
                     arrayState = arrayState,
@@ -504,7 +602,7 @@ fun visualizeSelectionSort(realTimeViewModel: RealTimeViewModel) {
                 )
 
             } else {
-                delay((800).toLong())
+                delay(realTimeViewModel.visualizationSpeed)
                 realTimeViewModel.sortStep = SortingStep(
                     step = "No Swapping performed",
                     arrayState = arrayState,
@@ -522,6 +620,7 @@ fun visualizeSelectionSort(realTimeViewModel: RealTimeViewModel) {
             noOfComparisons = noOfComparisons,
             noOfSwaps = noOfSwaps
         )
+        realTimeViewModel.isVisualizationRunning = false
     }
 }
 
@@ -556,7 +655,7 @@ fun visualizeInsertionSort(realTimeViewModel: RealTimeViewModel) {
                         arrayState.substring(0, j + 1) + arrayState[j] + arrayState.substring(j + 2)
                     noOfSwaps++
 
-                    delay((800).toLong())
+                    delay(realTimeViewModel.visualizationSpeed)
                     realTimeViewModel.sortStep = SortingStep(
                         step = "${numbers[j]} is $greaterOrLesser than $num\nShifting ${numbers[j]} to the right\nFinding position for $num",
                         arrayState = arrayState,
@@ -571,7 +670,7 @@ fun visualizeInsertionSort(realTimeViewModel: RealTimeViewModel) {
                     arrayState = arrayState.substring(0, j + 1) + t + arrayState.substring(j + 2)
                     noOfSwaps++
 
-                    delay((800).toLong())
+                    delay(realTimeViewModel.visualizationSpeed)
                     realTimeViewModel.sortStep = SortingStep(
                         step = "Inserting $num at index ${j + 1}",
                         arrayState = arrayState,
@@ -590,7 +689,7 @@ fun visualizeInsertionSort(realTimeViewModel: RealTimeViewModel) {
                 noOfSwaps++
                 arrayState = t + arrayState.substring(1)
 
-                delay((800).toLong())
+                delay(realTimeViewModel.visualizationSpeed)
                 realTimeViewModel.sortStep = SortingStep(
                     step = "Inserting $num at index 0",
                     arrayState = arrayState,
@@ -609,6 +708,7 @@ fun visualizeInsertionSort(realTimeViewModel: RealTimeViewModel) {
             noOfComparisons = noOfComparisons,
             noOfSwaps = noOfSwaps
         )
+        realTimeViewModel.isVisualizationRunning = false
     }
 
 }

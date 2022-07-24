@@ -18,16 +18,18 @@ class RealTimeViewModel @Inject constructor(
     var sortOrder = ""
     var userInputNumberToSearch = ""
     var userInputArray = listOf(0, 0, 0, 0, 0, 0, 0, 0)
+    var isVisualizationRunning by mutableStateOf(false)
 
     var inputArray by mutableStateOf(listOf(0, 0, 0, 0, 0, 0, 0, 0))
 
     var currStep by mutableStateOf("")
     var linearSearchState by mutableStateOf(0)
+    var visualizationSpeed by mutableStateOf(1200L)
     var binarySearchStates by mutableStateOf(listOf(-1,8,8))
 
     var numberFoundIndex by mutableStateOf(-1)
 
-    var sortStep by mutableStateOf(SortingStep(step = "Loading", arrayState = "01234567", modifiedArrSize = 8))
+    var sortStep by mutableStateOf(SortingStep(step = "", arrayState = "01234567", modifiedArrSize = 8))
 
 
     fun initArray(){

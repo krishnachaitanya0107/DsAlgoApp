@@ -15,6 +15,7 @@ import androidx.navigation.NavController
 import com.example.dsalgoapp.data.SortingStep
 import com.example.dsalgoapp.ui.screens.steps.checkGreaterOrLesser
 import com.example.dsalgoapp.ui.theme.*
+import com.example.dsalgoapp.util.Constants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -461,7 +462,7 @@ fun visualizeBubbleSort(realTimeViewModel: RealTimeViewModel) {
     var noOfComparisons = 0
     var noOfSwaps = 0
 
-    val greaterOrLesser = if (realTimeViewModel.sortOrder == "Ascending") "greater" else "less"
+    val greaterOrLesser = if (realTimeViewModel.sortOrder == Constants.ASCENDING) Constants.GREATER else Constants.LESSER
 
     CoroutineScope(Dispatchers.IO).launch {
         for (pass in 0 until size) {
@@ -539,8 +540,8 @@ fun visualizeSelectionSort(realTimeViewModel: RealTimeViewModel) {
     var noOfComparisons = 0
     var noOfSwaps = 0
 
-    val greaterOrLesser = if (realTimeViewModel.sortOrder == "Ascending") "greater" else "less"
-    val maxOrMin = if (realTimeViewModel.sortOrder == "Ascending") "max" else "min"
+    val greaterOrLesser = if (realTimeViewModel.sortOrder == Constants.ASCENDING) Constants.GREATER else Constants.LESSER
+    val maxOrMin = if (realTimeViewModel.sortOrder == Constants.ASCENDING) "max" else "min"
 
     CoroutineScope(Dispatchers.IO).launch {
 
@@ -634,7 +635,7 @@ fun visualizeInsertionSort(realTimeViewModel: RealTimeViewModel) {
     var noOfComparisons = 0
     var noOfSwaps = 0
 
-    val greaterOrLesser = if (realTimeViewModel.sortOrder == "Ascending") "greater" else "less"
+    val greaterOrLesser = if (realTimeViewModel.sortOrder == Constants.ASCENDING) Constants.GREATER else Constants.LESSER
 
     CoroutineScope(Dispatchers.IO).launch {
         for (i in 1..size) {

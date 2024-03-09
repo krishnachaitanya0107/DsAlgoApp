@@ -16,6 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.dsalgoapp.data.SortingStep
 import com.example.dsalgoapp.ui.theme.*
+import com.example.dsalgoapp.util.Constants
 
 @Composable
 fun StepsScreen(
@@ -359,7 +360,7 @@ fun generateBubbleSortSteps(stepsViewModel: StepsViewModel) {
     var noOfComparisons = 0
     var noOfSwaps = 0
 
-    val greaterOrLesser = if (stepsViewModel.sortOrder == "Ascending") "greater" else "less"
+    val greaterOrLesser = if (stepsViewModel.sortOrder == Constants.ASCENDING) Constants.GREATER else Constants.LESSER
 
     for (pass in 0 until size) {
         for (currentPosition in 0 until (size - pass)) {
@@ -434,8 +435,8 @@ fun generateSelectionSortSteps(stepsViewModel: StepsViewModel) {
     var noOfComparisons = 0
     var noOfSwaps = 0
 
-    val greaterOrLesser = if (stepsViewModel.sortOrder == "Ascending") "greater" else "less"
-    val maxOrMin = if (stepsViewModel.sortOrder == "Ascending") "max" else "min"
+    val greaterOrLesser = if (stepsViewModel.sortOrder == Constants.ASCENDING) Constants.GREATER else Constants.LESSER
+    val maxOrMin = if (stepsViewModel.sortOrder == Constants.ASCENDING) "max" else "min"
 
     for (i in size downTo 1) {
         var num = i
@@ -525,7 +526,7 @@ fun generateInsertionSortSteps(stepsViewModel: StepsViewModel) {
     var noOfComparisons = 0
     var noOfSwaps = 0
 
-    val greaterOrLesser = if (stepsViewModel.sortOrder == "Ascending") "greater" else "less"
+    val greaterOrLesser = if (stepsViewModel.sortOrder == Constants.ASCENDING) Constants.GREATER else Constants.LESSER
 
     for (i in 1..size) {
         val num = numbers[i]

@@ -14,6 +14,9 @@ object Constants {
     const val SORT_ORDER_KEY = "sort_order"
     const val STEPS_TYPE_KEY = "steps_type"
     const val DS_ID = "ds_id"
+    const val ASCENDING = ""
+    const val GREATER = ""
+    const val LESSER = ""
 
     val data = arrayListOf(
         DsAlgoItem(

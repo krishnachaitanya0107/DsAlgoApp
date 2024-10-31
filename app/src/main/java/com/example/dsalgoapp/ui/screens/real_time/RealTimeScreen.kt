@@ -1,5 +1,6 @@
 package com.example.dsalgoapp.ui.screens.real_time
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -21,6 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun RealTimeScreen(
     navController: NavController,
@@ -358,6 +360,7 @@ fun generateSteps(realTimeViewModel: RealTimeViewModel) {
     } else if (realTimeViewModel.stepsType.contains("insertion")) {
         visualizeInsertionSort(realTimeViewModel = realTimeViewModel)
     } else if (realTimeViewModel.stepsType.contains("quick")) {
+        //visualizeQuickSort(realTimeViewModel = realTimeViewModel)
         //generateQuickSortSteps(sortViewModel = sortViewModel)
     }
 
@@ -713,3 +716,70 @@ fun visualizeInsertionSort(realTimeViewModel: RealTimeViewModel) {
     }
 
 }
+
+/*suspend fun visualizeQuickSort(realTimeViewModel: RealTimeViewModel) {
+
+    val numbers = arrayListOf<Int>()
+    for (i in realTimeViewModel.inputArray) {
+        numbers.add(i)
+    }
+    val size = numbers.size - 1
+    var arrayState = "01234567"
+    var noOfComparisons = 0
+    var noOfSwaps = 0
+
+    val greaterOrLesser = if (realTimeViewModel.sortOrder == Constants.ASCENDING) Constants.GREATER else Constants.LESSER
+
+    val stack = mutableListOf<Pair<Int, Int>>()
+    stack.add(0 to size)
+
+    while (stack.isNotEmpty()) {
+        val (low, high) = stack.removeAt(stack.size - 1)
+        var i = low
+        var j = high
+        val pivot = numbers[(low + high) / 2]
+
+        while (i <= j) {
+            while (numbers[i] < pivot) i++
+            while (numbers[j] > pivot) j--
+            if (i <= j) {
+                val temp = numbers[i]
+                numbers[i] = numbers[j]
+                numbers[j] = temp
+
+                noOfComparisons++
+                noOfSwaps++
+
+                val step = "Swapping ${numbers[j]} with ${numbers[i]}"
+                realTimeViewModel.sortStep = SortingStep(
+                    step = step,
+                    arrayState = arrayState,
+                    currentComparisons = arrayListOf(i, j),
+                    modifiedArrSize = size,
+                    noOfComparisons = noOfComparisons,
+                    noOfSwaps = noOfSwaps
+                )
+                delay(realTimeViewModel.visualizationSpeed)
+
+                i++
+                j--
+            } else {
+                noOfComparisons++
+
+                val step = "Not Swapping anything"
+                realTimeViewModel.sortStep = SortingStep(
+                    step = step,
+                    arrayState = arrayState,
+                    currentComparisons = arrayListOf(i, j),
+                    modifiedArrSize = size,
+                    noOfComparisons = noOfComparisons,
+                    noOfSwaps = noOfSwaps
+                )
+                delay(realTimeViewModel.visualizationSpeed)
+            }
+        }
+
+        if (low < j) stack.add(low to j)
+        if (i < high) stack.add(i to high)
+    }
+}*/

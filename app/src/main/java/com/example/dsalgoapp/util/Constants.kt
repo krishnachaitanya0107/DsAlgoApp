@@ -53,8 +53,13 @@ object Constants {
                             name = "Insertion Sort",
                             id = "insertionSort",
                             description = "Insertion sort is a simple sorting algorithm that works similar to the way you sort playing cards in your hands. The array is virtually split into a sorted and an unsorted part. Values from the unsorted part are picked and placed at the correct position in the sorted part."
+                        ) ,
+                        /*DsAlgoDetailsItem(
+                            name = "Quick Sort",
+                            id = "quickSort" ,
+                            description = "Quick sort"
                         )
-                        /*, DsAlgoDetailsItem(
+                        , DsAlgoDetailsItem(
                             name = "Merge Sort",
                             id = "mergeSort",
                             description = "Merge Sort is a Divide and Conquer algorithm. It divides the input array into two halves, calls itself for the two halves, and then it merges the two sorted halves."

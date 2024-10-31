@@ -1,5 +1,6 @@
 package com.example.dsalgoapp.ui.screens.algo_detail
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -29,6 +30,7 @@ import com.example.dsalgoapp.navigation.Screen
 import com.example.dsalgoapp.ui.theme.*
 import kotlin.random.Random
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 @ExperimentalComposeUiApi
 fun AlgoDetailScreen(

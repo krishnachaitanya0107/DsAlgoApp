@@ -1,5 +1,6 @@
 package com.example.dsalgoapp.ui.screens.ds_detail
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,6 +18,7 @@ import com.example.dsalgoapp.navigation.Screen
 import com.example.dsalgoapp.ui.theme.titleColor
 import com.example.dsalgoapp.ui.theme.topAppBarBackgroundColor
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun DsDetailScreen(
     navController: NavController,
